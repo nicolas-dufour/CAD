@@ -1,0 +1,25 @@
+defaults:
+  - train_aug: none
+  - val_aug: none
+  - dataset: cifar10
+  - entropy_distribution: softmax_classifier
+  - entropy_preprocessing: margin_minmax
+  - collate_fn: from_tuple
+  - _self_
+  - resampling: resampled_labels
+
+collate_fn:
+  keys:
+    - image
+    - label
+    - confidence
+
+datamodule:
+  _target_: data.datamodule.ImageDataModule
+  train_dataset: ${data.train_dataset}
+  val_dataset: ${data.val_dataset}
+  full_batch_size: ${data.full_batch_size}
+  num_workers: ${computer.num_workers}
+  collate_fn: ${data.collate_fn}
+  num_nodes: ${computer.num_nodes}
+  num_devices: ${computer.devices}

@@ -1,0 +1,17 @@
+# @package _global_
+
+data:
+  entropy_preprocessing:
+    min_max_normalization: True
+    max_entropy_quantile: 1.0
+    min_entropy_quantile: 0.0
+
+  train_dataset:
+    min_max_normalization: ${data.entropy_preprocessing.min_max_normalization}
+    max_entropy_quantile: ${data.entropy_preprocessing.max_entropy_quantile}
+    min_entropy_quantile: ${data.entropy_preprocessing.min_entropy_quantile}
+
+  val_dataset:
+    min_max_normalization: ${data.entropy_preprocessing.min_max_normalization}
+    max_entropy_quantile: ${data.entropy_preprocessing.max_entropy_quantile}
+    min_entropy_quantile: ${data.entropy_preprocessing.min_entropy_quantile}

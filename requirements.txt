@@ -1,0 +1,13 @@
+torch
+torchvision
+hydra-core
+lightning
+einops
+torch-fidelity
+webdataset
+gradio
+transformers
+scikit-learn
+wandb
+timm
+diffusers

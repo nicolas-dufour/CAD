@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - /data/entropy_distribution/resampling_model: cifar_low
+  - _self_
+data:
+  entropy_distribution:
+    min_max_normalization: False
+    max_entropy_quantile: 1.0
+    min_entropy_quantile: 0.0
+    store_logits_path: ${root_dir}/datasets/datasets_logits  
+  train_dataset:
+    _partial_: true
+    _target_: data.resampled_dataset.SoftmaxLabelResampledDataset
+    resampling_model: ${data.entropy_distribution.resampling_model}
+    min_max_normalization: ${data.entropy_distribution.min_max_normalization}
+    max_entropy_quantile: ${data.entropy_distribution.max_entropy_quantile}
+    min_entropy_quantile: ${data.entropy_distribution.min_entropy_quantile}
+    store_logits_path: ${data.entropy_distribution.store_logits_path}
+
+  val_dataset:
+    _partial_: true
+    _target_: data.resampled_dataset.SoftmaxLabelResampledDataset
+    resampling_model: ${data.entropy_distribution.resampling_model}
+    min_max_normalization: ${data.entropy_distribution.min_max_normalization}
+    max_entropy_quantile: ${data.entropy_distribution.max_entropy_quantile}
+    min_entropy_quantile: ${data.entropy_distribution.min_entropy_quantile}
+    store_logits_path: ${data.entropy_distribution.store_logits_path}

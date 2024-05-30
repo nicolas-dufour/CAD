@@ -1,0 +1,26 @@
+# @package _global_
+
+data:
+  name: CC3M
+  type: text_conditional
+  img_resolution: 256
+  label_dim: 2048
+  num_cond_tokens: 77
+  full_batch_size: 1024
+  in_channels: 3
+  out_channels: 3
+
+  train_instance:
+    _partial_: true
+    _target_: data.text_dataset.TextWebDataset
+    root: ${data_dir}/cc3m/train
+    image_transforms: ${data.train_aug}
+    train: true
+    text_embedding_name: ${model.text_embedding_name}
+    
+  val_instance:
+    _partial_: true
+    _target_: data.text_dataset.TextDataset
+    root: ${data_dir}/cc3m/val
+    image_transforms: ${data.val_aug}
+    text_embedding_name: ${model.text_embedding_name}

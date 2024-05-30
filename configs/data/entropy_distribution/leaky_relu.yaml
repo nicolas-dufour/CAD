@@ -1,0 +1,26 @@
+# @package _global_
+
+data:
+  entropy_distribution:
+    threshold: 0.5
+    entropy_at_threshold: 0.5
+    dataset_resampling_suffix: leaky_relu_${data.entropy_distribution.threshold}
+  train_dataset:
+    _partial_: true
+    _target_: data.resampled_dataset.LeakyReLULabelResampledDataset
+    entropy_repartition_function: 
+      _partial_: true
+      _target_: utils.entropy.leaky_relu_entropy_repartion
+      threshold: ${data.entropy_distribution.threshold}
+      entropy_at_threshold: ${data.entropy_distribution.entropy_at_threshold}
+    min_max_normalization: False
+
+  val_dataset:
+    _partial_: true
+    _target_: data.resampled_dataset.LeakyReLULabelResampledDataset
+    entropy_repartition_function: 
+      _partial_: true
+      _target_: utils.entropy.leaky_relu_entropy_repartion
+      threshold: ${data.entropy_distribution.threshold}
+      entropy_at_threshold: ${data.entropy_distribution.entropy_at_threshold}
+    min_max_normalization: False

@@ -1,0 +1,34 @@
+# @package _global_
+
+data:
+  name: CIFAR-10
+  type: class_conditional
+  img_resolution: 32
+  data_resolution: 32
+  label_dim: 10
+  num_cond_tokens: 1
+  full_batch_size: 256
+  in_channels: 3
+  out_channels: 3
+
+  train_instance:
+    _partial_: true
+    _target_: torchvision.datasets.CIFAR10
+    root: ${data_dir}
+    download: True
+    train: True
+    transform: ${data.train_aug}
+    target_transform: ${data.target_transform}
+
+  val_instance:
+    _partial_: true
+    _target_: torchvision.datasets.CIFAR10
+    root: ${data_dir}
+    download: True
+    train: False
+    transform: ${data.val_aug}
+    target_transform: ${data.target_transform}
+
+  target_transform:
+    _target_: utils.one_hot_transform.OneHotTransform
+    num_classes: ${data.label_dim}

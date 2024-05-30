@@ -1,0 +1,8 @@
+# @package _global_
+
+data:
+  entropy_distribution:
+    resampling_model:
+      _target_: data.feature_extractor.cifar.model.CIFAR10Module.load_from_checkpoint
+      checkpoint_path: ${root_dir}/data/feature_extractor/cifar/checkpoints/last_0.1.ckpt
+    dataset_resampling_suffix: medium

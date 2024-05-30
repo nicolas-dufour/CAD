@@ -1,0 +1,50 @@
+# @package _global_
+
+defaults:
+  - override /model: class_cond_cad
+  - override /data: leaky_relu
+  - override /data/dataset: imagenet
+  - override /data/train_aug: center_crop
+  - override /data/val_aug: center_crop
+  - override /model/train_noise_scheduler: linear
+  - _self_
+
+data:
+  name: ImageNet_64
+  img_resolution: 64
+  data_resolution: 64
+  full_batch_size: 1024
+
+model:
+  network:
+    data_dim: 512
+    num_latents: 128
+    latents_dim: 768
+    num_processing_layers: 4
+    num_blocks: 4
+    path_size: 8
+    read_write_heads: 16
+    compute_heads: 16
+    data_mlp_multiplier: 4
+    compute_dropout: 0
+    rw_stochastic_depth: 0
+    compute_stochastic_depth: 0
+    mix_labels_and_confidence: false
+
+  ema_decay: 0.9999
+  start_ema_step: 0
+  optimizer:
+    optim:
+      lr: 0.002
+      weight_decay: 0.01
+    exclude_ln_and_biases_from_weight_decay: True
+  lr_scheduler:
+    warmup_steps: 10000
+    rate: 0.7
+
+trainer:
+  max_steps: 150000
+  
+checkpoints:
+  eval_set: val
+  every_n_train_steps: 10000
