@@ -1,6 +1,6 @@
 <div align="center">
 
-# Dont Drop Your samples: Coherence-aware training benefits Condition Diffusion
+# Don’t drop your samples! Coherence-aware training benefits Conditional diffusion
 
 <a href="https://nicolas-dufour.github.io/" >Nicolas Dufour</a>, <a href="https://scholar.google.com/citations?user=n_C2h-QAAAAJ&hl=fr&oi=ao" >Victor Besnier</a>, <a href="https://vicky.kalogeiton.info/" >Vicky Kalogeiton</a>, <a href="https://davidpicard.github.io/" >David Picard</a>
 </div>
@@ -67,14 +67,14 @@ As a side contribution, we also provide a new text-to-image model called TextRIN
 
 To train TextRIN with CAD on LAION Aesthetic 6+ and CC12M you can use the following command:
 ```bash
-python train.py overrides=cc12m_256_rin_tiny_ldm_cad.yaml
+python train.py overrides=cc12m_256_rin_tiny_ldm_cad
 ```
 
 ## TextRIN without CAD
 
 To train TextRIN without CAD on LAION Aesthetic 6+ and CC12M you can use the following command:
 ```bash
-python train.py overrides=cc12m_256_rin_tiny_ldm.yaml
+python train.py overrides=cc12m_256_rin_tiny_ldm
 ```
 
 ## Reproduction of RIN
@@ -95,8 +95,8 @@ Coming soon
 ## Citation
 If you happen to use this repo in your experiments, you can acknowledge us by citing the following paper:
 ```bibtex
-@article{dufour2024cad,
-  title={Dont Drop Your samples: Coherence-aware training benefits Condition Diffusion},
+@article{dufour2024dont,
+  title={Don’t drop your samples! Coherence-aware training benefits Conditional diffusion},
   author={Nicolas Dufour and Victor Besnier and Vicky Kalogeiton and David Picard},
   journal={CVPR}
   year={2024}
