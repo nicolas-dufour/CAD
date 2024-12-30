@@ -1,5 +1,0 @@
-# @package _global_
-
-data:
-  train_dataset: ${data.train_instance}
-  val_dataset: ${data.train_instance}

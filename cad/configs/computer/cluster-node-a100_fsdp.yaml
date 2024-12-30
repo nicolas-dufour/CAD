@@ -1,0 +1,11 @@
+devices: 8
+num_workers: 8
+progress_bar_refresh_rate: 2
+sync_batchnorm: True
+accelerator: gpu
+precision: bf16-mixed
+strategy:
+  _target_: pytorch_lightning.strategies.fsdp.FSDPStrategy
+  sharding_strategy: SHARD_GRAD_OP
+num_nodes: 1
+eval_gpu_type: a100

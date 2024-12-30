@@ -1,0 +1,2 @@
+_target_: cad.models.postprocessing.SD1_5VAEConsistencyProcessing
+channel_wise_normalisation: ${model.channel_wise_normalisation}

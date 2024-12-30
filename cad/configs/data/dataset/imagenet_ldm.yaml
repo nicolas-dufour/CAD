@@ -1,0 +1,43 @@
+# @package _global_
+
+data:
+  name: ImageNet_LDM
+  type: class_conditional
+  img_resolution: 256
+  data_resolution: 32
+  label_dim: 1000
+  num_cond_tokens: 1
+  full_batch_size: 1024
+  in_channels: 4
+  out_channels: 4
+
+  train_instance:
+    _partial_: true
+    _target_: data.dataset.LDMImagenetWebdataset
+    root: ${data_dir}/imagenet_webdataset/train
+    image_transforms: ${data.train_aug}
+    distributed: True
+    train: True
+    epoch: 0
+    seed: 3407
+    vae_embedding_name_mean: ${model.vae_embedding_name_mean}
+    vae_embedding_name_std: ${model.vae_embedding_name_std}
+    return_image: ${model.return_image}
+    num_classes: 1000
+    shard_shuffle_size: 2000
+    shard_shuffle_initial: 500
+    sample_shuffle_size: 5000
+    sample_shuffle_initial: 1000
+  val_instance:
+    _partial_: true
+    _target_: data.dataset.LDMImageNet
+    root: ${data_dir}/imagenet_webdataset/val
+    image_transforms: ${data.val_aug}
+    vae_embedding_mean_name: ${model.vae_embedding_name_mean}
+    vae_embedding_std_name: ${model.vae_embedding_name_std}
+    return_image: False
+    target_transform: ${data.target_transform}
+
+  target_transform:
+    _target_: utils.one_hot_transform.OneHotTransform
+    num_classes: ${data.label_dim}

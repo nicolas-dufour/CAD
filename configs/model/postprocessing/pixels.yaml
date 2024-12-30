@@ -1,2 +1,0 @@
-_partial_: true
-_target_: utils.image_processing.remap_image_torch

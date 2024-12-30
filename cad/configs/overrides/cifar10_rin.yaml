@@ -1,0 +1,25 @@
+# @package _global_
+
+defaults:
+  - override /model: class_cond
+  - override /data/dataset: cifar10
+  - _self_
+
+model:
+  ema_decay: 0.9999
+  start_ema_step: 0
+  optimizer:
+    optim:
+      lr: 0.003
+      weight_decay: 0.01
+    exclude_ln_and_biases_from_weight_decay: True
+  lr_scheduler:
+    warmup_steps: 10000
+    rate: 0.8
+
+trainer:
+  max_steps: 150000
+
+checkpoints:
+  eval_set: train
+  every_n_train_steps: 10000

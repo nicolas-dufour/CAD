@@ -1,0 +1,26 @@
+defaults:
+  - optimizer: lamb
+  - lr_scheduler: warmup_cosine_decay
+  - network: cad_rin_text
+  - train_noise_scheduler: sigmoid
+  - inference_noise_scheduler: cosine_simple
+  - preconditioning: ddpm
+  - data_preprocessing: pixels
+  - cond_preprocessing: precomputed_text_emb
+  - postprocessing: pixels
+  - loss: ddpm
+  - val_sampler: ddim
+  - test_sampler: ddpm
+  - uncond_conditioning: t5_uncond
+  - precomputed_text_embeddings: "yes"
+  - use_ldm: "no"
+  - _self_
+
+name: RIN
+ema_decay: 0.9999
+start_ema_step: 0
+cfg_rate: 3.0
+negative_prompts: random_prompt
+coherence_value: 1.0
+use_coherence_sampling: true
+channel_wise_normalisation: false

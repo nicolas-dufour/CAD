@@ -1,0 +1,6 @@
+_target_: cad.models.postprocessing.SD1_5VAEDecoderPostProcessing
+vae:
+  _target_: diffusers.AutoencoderKL.from_pretrained
+  pretrained_model_name_or_path: "benjamin-paine/stable-diffusion-v1-5"
+  subfolder: "vae"
+channel_wise_normalisation: ${model.channel_wise_normalisation}

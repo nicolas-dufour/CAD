@@ -1,7 +1,0 @@
-_target_: models.preprocessing.SDLatentPreconditioning
-vae:
-  _target_: diffusers.AutoencoderKL.from_pretrained
-  pretrained_model_name_or_path: "runwayml/stable-diffusion-v1-5"
-  subfolder: vae
-input_key: image
-output_key: x_0

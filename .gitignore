@@ -161,13 +161,16 @@ cython_debug/
 
 
 .vscode/
-checkpoints/
-wandb/
+cad/checkpoints/
+cad/wandb/
 outputs/
-datasets/*
-!datasets/text_prompt_testbed
+cad/datasets/*
+!cad/datasets/text_prompt_testbed
 scratch.ipynb
 notebooks/*
 profiler_log
 results
+fid_explo
 demos/images
+index.html
+assets/

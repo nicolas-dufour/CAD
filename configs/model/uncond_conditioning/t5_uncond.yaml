@@ -1,2 +1,0 @@
-_target_: numpy.load
-file: ${root_dir}/utils/flan_t5_xl_uncond.npy

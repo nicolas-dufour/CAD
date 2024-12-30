@@ -1,0 +1,61 @@
+# @package _global_
+
+defaults:
+  - override /model: cad_text_cond
+  - override /data: webdataset
+  - override /data/dataset: cc12m_la6
+  - override /data/train_aug: center_crop
+  - override /data/val_aug: center_crop
+  - override /model/train_noise_scheduler: linear
+  - override /model/precomputed_text_embeddings: 'yes'
+  - override /model/use_ldm: precomputed
+  - _self_
+  - override /use_condition: cad_guidance
+
+data:
+  name: CC12M_LAION_Aesthetics6_512_LDM
+  img_resolution: 512
+  data_resolution: 64
+  full_batch_size: 1024
+  train_instance:
+    bin_coherence: true
+model:
+  network:
+    data_dim: 256
+    num_latents: 512
+    latents_dim: 1024
+    num_processing_layers: 4
+    num_blocks: 4
+    path_size: 2
+    read_write_heads: 16
+    compute_heads: 16
+    data_mlp_multiplier: 4
+    compute_dropout: 0
+    rw_stochastic_depth: 0
+    compute_stochastic_depth: 0
+
+  ema_decay: 0.9999
+  start_ema_step: 0
+  optimizer:
+    optim:
+      lr: 1e-4
+      weight_decay: 0.01
+    exclude_ln_and_biases_from_weight_decay: True
+  lr_scheduler:
+    warmup_steps: 2000
+    # rate: 0.7
+
+trainer:
+  max_steps: 500000
+  gradient_clip_val: 2.0
+
+checkpoints:
+  eval_set: val
+  every_n_train_steps: 10000
+  validate_conditional: True
+  validate_unconditional: False
+  validate_per_class_metrics: False
+
+grafting_state_dict_path: ${root_dir}/cad/checkpoints/CC12m_LAION_Aesthetics_6_RIN_ldm_256_small_cad/last.ckpt
+
+experiment_name_suffix: "grafted_latents_and_blocks"
