@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from consistencydecoder import ConsistencyDecoder
 
 from cad.utils.image_processing import remap_image_torch
 
@@ -38,12 +37,17 @@ class SD1_5VAEDecoderPostProcessing(SD1_5VAEPostProcessing):
             return remap_image_torch(self.vae.decode(x).sample.detach())
 
 
-class SD1_5VAEConsistencyProcessing(SD1_5VAEPostProcessing):
-    def __init__(self, channel_wise_normalisation=False):
-        super().__init__(channel_wise_normalisation=channel_wise_normalisation)
-        self.consistency = ConsistencyDecoder()
+try:
+    from consistencydecoder import ConsistencyDecoder
 
-    def forward(self, x):
-        x = super().forward(x)
-        with torch.no_grad():
-            return remap_image_torch(self.consistency(x).detach())
+    class SD1_5VAEConsistencyProcessing(SD1_5VAEPostProcessing):
+        def __init__(self, channel_wise_normalisation=False):
+            super().__init__(channel_wise_normalisation=channel_wise_normalisation)
+            self.consistency = ConsistencyDecoder()
+
+        def forward(self, x):
+            x = super().forward(x)
+            with torch.no_grad():
+                return remap_image_torch(self.consistency(x).detach())
+except ImportError:
+    pass
