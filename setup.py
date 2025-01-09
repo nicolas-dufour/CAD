@@ -16,7 +16,7 @@ setup(
         "einops",
         "transformers",
         "diffusers",
-        "huggingface_hub",
+        "huggingface_hub>=0.23",
     ],
     packages=["cad"],
     package_data={"cad": ["**/*"]},
