@@ -73,6 +73,82 @@ Models are hosted in the hugging face hub. The previous scripts download them au
 
 [https://huggingface.co/nicolas-dufour/CAD_512](https://huggingface.co/nicolas-dufour/CAD_512)
 
+## Using the Pipeline
+
+The `CADT2IPipeline` class provides a comprehensive interface for generating images from text prompts. Here's a detailed guide on how to use it:
+
+### Basic Usage
+
+```python
+from cad import CADT2IPipeline
+
+# Initialize the pipeline
+pipe = CADT2IPipeline("nicolas-dufour/CAD_512").to("cuda")
+
+# Generate an image from a prompt
+prompt = "An avocado armchair"
+image = pipe(prompt, cfg=15)
+```
+
+### Advanced Configuration
+
+The pipeline can be initialized with several customization options:
+
+```python
+pipe = CADT2IPipeline(
+    model_path="nicolas-dufour/CAD_512",
+    sampler="ddim",                    # Options: "ddim", "ddpm", "dpm", "dpm_2S", "dpm_2M"
+    scheduler="sigmoid",               # Options: "sigmoid", "cosine", "linear"
+    postprocessing="sd_1_5_vae",      # Options: "consistency-decoder", "sd_1_5_vae"
+    scheduler_start=-3,
+    scheduler_end=3,
+    scheduler_tau=1.1,
+    device="cuda"
+)
+```
+
+### Generation Parameters
+
+The pipeline's `__call__` method accepts various parameters to control the generation process:
+
+```python
+image = pipe(
+    cond="A beautiful landscape",          # Text prompt or list of prompts
+    num_samples=4,                         # Number of images to generate
+    cfg=15,                               # Classifier-free guidance scale
+    guidance_type="constant",             # Type of guidance: "constant", "linear"
+    guidance_start_step=0,                # Step to start guidance
+    coherence_value=1.0,                  # Coherence value for sampling
+    uncoherence_value=0.0,                # Uncoherence value for sampling
+    thresholding_type="clamp",           # Type of thresholding: "clamp", "dynamic_thresholding", "per_channel_dynamic_thresholding"
+    clamp_value=1.0,                      # Clamp value for thresholding
+    thresholding_percentile=0.995         # Percentile for thresholding
+)
+```
+
+#### Guidance Types
+- `constant`: Applies uniform guidance throughout the sampling process
+- `linear`: Linearly increases guidance strength from start to end
+- `exponential`: Exponentially increases guidance strength from start to end
+
+#### Thresholding Types
+- `clamp`: Clamps values to a fixed range using `clamp_value`
+- `dynamic`: Dynamically adjusts thresholds based on the batch statistics
+- `percentile`: Uses percentile-based thresholding with `thresholding_percentile`
+
+### Advanced Parameters
+
+For more control over the generation process, you can also specify:
+
+- `x_N`: Initial noise tensor
+- `latents`: Previous latents for continuation
+- `num_steps`: Custom number of sampling steps
+- `sampler`: Custom sampler function
+- `scheduler`: Custom scheduler function
+- `guidance_start_step`: Step to start guidance
+- `generator`: Random number generator for reproducibility
+- `unconfident_prompt`: Custom unconfident prompt text
+
 ## Training
 ### Datasets
 Downlowad the datasets and add them in ```/datasets```. A few presets are already defined in the ```configs/data``` folder (Imagenet, CIFAR-10, LAION Aesthetic 6+ and CC12M)
