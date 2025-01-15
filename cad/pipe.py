@@ -13,9 +13,13 @@ from cad.models.samplers import (
 )
 
 from cad.models.postprocessing import (
-    SD1_5VAEConsistencyProcessing,
     SD1_5VAEDecoderPostProcessing,
 )
+
+try:
+    from cad.models.postprocessing import SD1_5VAEConsistencyProcessing
+except ImportError:
+    pass
 
 from cad.models.schedulers import (
     SigmoidScheduler,
@@ -45,7 +49,10 @@ MODELS = {
 
 def get_postprocessing(postprocessing_name):
     if postprocessing_name == "consistency-decoder":
-        return SD1_5VAEConsistencyProcessing()
+        try:
+            return SD1_5VAEConsistencyProcessing()
+        except:
+            raise ImportError("ConsistencyDecoder not found")
     elif postprocessing_name == "sd_1_5_vae":
         vae = AutoencoderKL.from_pretrained(
             "benjamin-paine/stable-diffusion-v1-5", subfolder="vae"
