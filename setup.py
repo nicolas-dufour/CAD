@@ -5,10 +5,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="cad-diffusion",
-    version="1.0",
+    version="1.2",
     description="Package for the CAD diffusion model",
     author="Nicolas Dufour",
-    # packages=find_packages(exclude=["tests*"]),
     python_requires=">=3.11",
     install_requires=[
         "torch",

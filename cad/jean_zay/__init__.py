@@ -1,1 +1,1 @@
-from .launch import JeanZayExperiment
+from cad.jean_zay.launch import JeanZayExperiment
