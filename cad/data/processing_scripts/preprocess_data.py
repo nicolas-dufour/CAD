@@ -170,10 +170,10 @@ def add_clip_scores_and_embeddings(src, dest, batch_size=512):
                 )
                 vae_embeddings_256 = (
                     vae_model.encode(vae_image_256).latent_dist.mean.cpu().numpy()
-                ) * vae_model.config.scaling_factor
+                )
                 vae_embeddings_512 = (
                     vae_model.encode(vae_image_512).latent_dist.mean.cpu().numpy()
-                ) * vae_model.config.scaling_factor
+                )
             for i in range(len(keys)):
                 t5_embeddings_length = t5_text["attention_mask"][i].sum().item()
                 json[i]["clip_score"] = clip_scores[i].item()
